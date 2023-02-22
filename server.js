@@ -27,6 +27,16 @@ app.post('/musicians', async (req, res) => {
     res.json(allMusicians);
 })
 
+app.use(express.json());
+app.put('/musicians/:id', async (req, res) => {
+    let id = req.params.id;
+    req.body = {name: "Lady Gaga", instrument: "Piano"};
+    const newMusician = req.body;
+    const updateMusician = await Musician.update(newMusician, { where: { id: id } } );
+    const allMusicians = await Musician.findAll()
+    res.json(allMusicians);
+})
+
 app.listen(port, () => {
     sequelize.sync();
     console.log(`Listening on port ${port}`)
