@@ -37,6 +37,13 @@ app.put('/musicians/:id', async (req, res) => {
     res.json(allMusicians);
 })
 
+app.delete('musicians/:id', async (req, res) => {
+    let id = req.params.id;
+    const deleteMusician = await Musician.destroy({ where: { id: id } });
+    const allMusicians = await Musician.findAll();
+    res.json(allMusicians);
+})
+
 app.listen(port, () => {
     sequelize.sync();
     console.log(`Listening on port ${port}`)
